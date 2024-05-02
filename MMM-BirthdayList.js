@@ -2,7 +2,6 @@ Module.register("MMM-BirthdayList", {
 
 	// Default module config.
 	defaults: {
-		updateInterval: 6 * 60 * 60 * 1000,
 		tableClass: "small",
         birthdays: []
 	},
@@ -21,9 +20,7 @@ Module.register("MMM-BirthdayList", {
 	start: function () {
 		Log.info("Starting module: " + this.name);
 		this.label = "";
-		setTimeout(function () {
-			this.updateDom();
-		}, this.config.updateInterval);
+        this.setRefreshTimer()
 	},
 
 	// Override dom generator.
@@ -66,4 +63,14 @@ Module.register("MMM-BirthdayList", {
 
 		return table;
 	},
+
+    setRefreshTimer: function () {
+        var now = new Date();
+        var time = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+        var ms = time - now;
+		setInterval(function () {
+			this.updateDom();
+            this.setRefreshTimer();
+		}, ms);
+    }
 });
