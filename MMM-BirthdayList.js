@@ -68,9 +68,10 @@ Module.register("MMM-BirthdayList", {
         var now = new Date();
         var time = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
         var ms = time - now;
+        let self = this;
         setInterval(function () {
-            this.updateDom();
-            this.setRefreshTimer();
+            self.updateDom();
+            self.setRefreshTimer();
         }, ms);
     }
 });
